@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_bulma',
+    'crispy_forms',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
+CRISPY_TEMPLATE_PACK = "bulma"
+
+LOGIN_REDIRECT_URL = "inicio"
+LOGOUT_REDIRECT_URL = 'login_user'
+
+LOGIN_URL = 'login_user'

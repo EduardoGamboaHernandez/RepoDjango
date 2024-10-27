@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+
+<body>
+    {% load crispy_forms_filters %}
+    <form action="{% url "repo_create" %}" method="post">
+        <h1 class="title has-text-centered">Crear nuevo Repositorio</h1>
+        {% csrf_token %}
+        {{form|crispy}}
+        <button class="button" type="submit">Crear</button>
+    </form>
+</body>
+</html>

@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
@@ -11,6 +10,5 @@ class SignUpView(CreateView):
     template_name = "user/signup.html"
 
 
-@login_required(login_url="login_user")
 def index(request):
     return render(request, "user/index.html")

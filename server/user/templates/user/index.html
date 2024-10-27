@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hola {{ user.get_username }}
+
+    <form action="{% url 'logout_user' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+
+        <p><a href="{% url 'pass_change_user' %}">Password Change</a></p>
+    </form>
+</body>
+</html>

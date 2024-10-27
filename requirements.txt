@@ -1,3 +1,3 @@
 GitPython==3.1.43
 Django==5.1.2
-
+crispy-bulma==0.11.0

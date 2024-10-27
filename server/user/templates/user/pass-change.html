@@ -1,0 +1,15 @@
+{% extends 'user/base-form.html' %}
+
+{% block title %}
+Cambio de contraseña
+{% endblock %}
+
+{% block form %}
+{% load crispy_forms_filters %}
+<form action="" method="post">
+    <h1 class="title has-text-centered">Cambiar contraseña</h1>
+    {% csrf_token %}
+    {{form|crispy}}
+    <button class="button" type="submit">Cambiar</button>
+</form>
+{% endblock %}

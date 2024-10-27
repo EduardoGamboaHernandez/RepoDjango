@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_bulma',
 
     'repository',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -136,9 +137,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# crispy bulma
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
 CRISPY_TEMPLATE_PACK = "bulma"
 
-
 REPOS_DIR = "/home/eduardo/dev/server/repos/"
+
+LOGIN_REDIRECT_URL = "inicio"
+LOGOUT_REDIRECT_URL = 'login_user'
+
+LOGIN_URL = 'login_user'

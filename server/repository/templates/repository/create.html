@@ -9,12 +9,61 @@
 </head>
 
 <body>
+
     {% load crispy_forms_filters %}
-    <form action="{% url "repo_create" %}" method="post">
-        <h1 class="title has-text-centered">Crear nuevo Repositorio</h1>
-        {% csrf_token %}
-        {{form|crispy}}
-        <button class="button" type="submit">Crear</button>
-    </form>
+
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-7">
+                    <h4 class="title is-4">Crear Nuevo Repositorio</h4>
+                    <p class="subtitle is-6">
+                        Almacena de forma segura el código de configuración de tu servidor privado
+                    </p>
+
+                    <hr />
+
+                    <form id="create-repo-form">
+                        {% csrf_token %}
+                        <div class="field">
+                            <div class="control">
+                                {{ form.name|as_crispy_field}}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                {{ form.description|as_crispy_field}}
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="field">
+                            <div class="control">
+                                {{ form.remote|as_crispy_field}}
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="field">
+                            <label class="label">Crear README.md</label>
+                            <div class="control">
+                                <label class="checkbox">
+                                    {{ form.readme_md|as_crispy_field}}
+                                </label>
+                            </div>
+                            <p class="help">Un README.md proporciona una primera impresión de tu proyecto.</p>
+                        </div>
+
+                        <hr />
+
+                        <button class="button is-primary">Crear repositorio</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

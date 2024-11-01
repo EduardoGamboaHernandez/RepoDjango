@@ -7,7 +7,7 @@ import os
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
 
-class CreateRepo(forms.Form):
+class RepoForm(forms.Form):
     name = forms.CharField(
         max_length=30,
         label="Nombre del Repositorio",
@@ -32,10 +32,9 @@ class CreateRepo(forms.Form):
             attrs={'placeholder': 'https://github.com/tu-usuario/tu-repositorio.git'})
     )
 
-    def save(self):
-        print("=="*20)
-        repos_dir = path = os.path.join(REPOS_DIR, )
-        repo = CreateRepo(self.cleaned_data["name"], REPOS_DIR)
+    def save(self, username=None):
+        path = os.path.join(REPOS_DIR, username)
+        repo = CreateRepo(self.cleaned_data["name"], path)
         repo.set_description(self.cleaned_data["description"])
         repo.set_remote("origin", self.cleaned_data["remote"])
         repo.create()

@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import CreateRepo
 
-# Create your views here.
 
+# Create your views here.
 class CreateRepoView(generic.FormView):
     template_name = 'repository/create.html'
     form_class = CreateRepo

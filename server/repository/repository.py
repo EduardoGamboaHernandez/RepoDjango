@@ -1,16 +1,28 @@
-from django.conf import settings
 import git
-import os
+import os.path.join as path_join
 
 
-REPOS_DIR = getattr(settings, "REPOS_DIR", None)
-def create_repo(name, description):
-    repo_path = f"{REPOS_DIR}/{name}.git"
-    repo = git.Repo.init(repo_path, bare=True, mkdir=True)
-    repo.description = description
-    if(repo):
-        print(f"Nuevo repositorio bare creado en: {repo_path}")
+class CreateRepo:
+    def __init__(self, name: str, path_to_repos: str):
+        self.path_to_repos = path_to_repos
+        self.name_repo = name
 
+        self._description = False
+        self._remote = False
 
-if __name__ == "__main__":
-    print(REPOS_DIR)
+    def set_description(self, description: str):
+        self._description = description
+
+    def set_remote(self, name: str, url: str):
+        self._remote = [name, url]
+
+    def create(self):
+        repo_path = path_join(self.path_to_repos, f"{self.name_repo}.git")
+
+        self._repo = git.Repo.init(repo_path, bare=True, mkdir=True)
+
+        if self._description:
+            self._repo.description = self._description
+
+        if self._remote:
+            self._repo.create_remote(self._remote[0], self._remote[1])

@@ -23,7 +23,7 @@
 
                     <hr />
 
-                    <form id="create-repo-form">
+                    <form action="{% url "repo_create" %}" method="post">
                         {% csrf_token %}
                         <div class="field">
                             <div class="control">

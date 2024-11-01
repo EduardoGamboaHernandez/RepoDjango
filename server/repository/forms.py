@@ -31,8 +31,6 @@ class CreateRepo(forms.Form):
         widget=forms.TextInput(
             attrs={'placeholder': 'https://github.com/tu-usuario/tu-repositorio.git'})
     )
-    readme_md = forms.BooleanField(
-        label="Crear un archivo README.md básico", required=False)
 
     def save(self):
         print("=="*20)

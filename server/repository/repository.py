@@ -1,5 +1,5 @@
 import git
-import os.path.join as path_join
+import os
 
 
 class CreateRepo:
@@ -17,7 +17,7 @@ class CreateRepo:
         self._remote = [name, url]
 
     def create(self):
-        repo_path = path_join(self.path_to_repos, f"{self.name_repo}.git")
+        repo_path = os.path.join(self.path_to_repos, f"{self.name_repo}.git")
 
         self._repo = git.Repo.init(repo_path, bare=True, mkdir=True)
 

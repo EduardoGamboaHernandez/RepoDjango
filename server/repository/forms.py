@@ -1,6 +1,7 @@
 from django.conf import settings
 from django import forms
 from .repository import CreateRepo
+import os
 
 
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
@@ -31,8 +32,9 @@ class RepoForm(forms.Form):
             attrs={'placeholder': 'https://github.com/tu-usuario/tu-repositorio.git'})
     )
 
-    def save(self):
-        repo = CreateRepo(self.cleaned_data["name"], REPOS_DIR)
+    def save(self, username=None):
+        path = os.path.join(REPOS_DIR, username)
+        repo = CreateRepo(self.cleaned_data["name"], path)
         repo.set_description(self.cleaned_data["description"])
         repo.set_remote("origin", self.cleaned_data["remote"])
         repo.create()

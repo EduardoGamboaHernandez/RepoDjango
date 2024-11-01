@@ -10,5 +10,5 @@ class CreateRepoView(generic.FormView):
     success_url = reverse_lazy('repo_create')
 
     def form_valid(self, form):
-        form.save()
+        form.save(username=self.request.user.username)
         return super().form_valid(form)

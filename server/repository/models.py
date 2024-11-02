@@ -3,6 +3,8 @@ from django_hashids import HashidsField
 from django.contrib.auth.models import User
 from django.conf import settings
 from .repository import CreateRepo
+from django.dispatch import receiver
+import shutil
 import os
 
 
@@ -14,6 +16,8 @@ class RepoModel(models.Model):
     hashid = HashidsField(real_field_name="id", min_length=6)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
+    description = None
+    remote = None
 
     def __str__(self):
         return self.user.username + "/" + self.name
@@ -21,8 +25,19 @@ class RepoModel(models.Model):
     def save(self, *args, **kwargs):
         path = os.path.join(REPOS_DIR, self.user.username)
         repo = CreateRepo(self.name, path)
-        repo.set_description(self.description)
-        repo.set_remote("origin", self.remote)
+
+        if self.description:
+            repo.set_description(self.description)
+
+        if self.remote:
+            repo.set_remote("origin", self.remote)
+
         repo.create()
 
         return super().save(*args, **kwargs)
+
+
+@receiver(models.signals.post_delete, sender=RepoModel)
+def delete_repo_hook(sender, instance, using, **kwargs):
+    path = os.path.join(REPOS_DIR, instance.user.username, f"{instance.name}.git")
+    shutil.rmtree(path)

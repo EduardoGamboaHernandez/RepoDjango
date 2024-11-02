@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from pathlib import Path
 
 
 dotenv_path = Path('../.env')
@@ -138,7 +137,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
 CRISPY_TEMPLATE_PACK = "bulma"
 
@@ -157,3 +155,5 @@ LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
     "logout_user",
     "signup",
 ]
+
+DJANGO_HASHIDS_SALT = 'git_salt'

@@ -9,6 +9,10 @@ class CreateRepoView(generic.FormView):
     form_class = RepoForm
     success_url = reverse_lazy('repo_create')
 
-    def form_valid(self, form):
-        form.save(username=self.request.user.username)
-        return super().form_valid(form)
+    def form_valid(self, model):
+        instance = model.save(commit=False)
+        instance.user = self.request.user
+        instance.description = self.request.POST.get('description')
+        instance.remote = self.request.POST.get('remote')
+        instance.save()
+        return super().form_valid(model)

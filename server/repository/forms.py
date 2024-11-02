@@ -1,28 +1,30 @@
-from django.conf import settings
 from django import forms
-from .repository import CreateRepo
-import os
+from .models import RepoModel
 
 
-REPOS_DIR = getattr(settings, "REPOS_DIR", None)
+class RepoForm(forms.ModelForm):
+    class Meta:
+        model = RepoModel
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(attrs={'placeholder': 'Ingrese un nombre claro y conciso'}),
+        }
+        labels = {
+            "name": "Nombre del Repositorio",
+        }
+        help_texts = {
+            "name": "El nombre del repositorio será utilizado para identificarlo.",
+        }
 
-
-class RepoForm(forms.Form):
-    name = forms.CharField(
-        max_length=30,
-        label="Nombre del Repositorio",
-        help_text="El nombre del repositorio será utilizado para identificarlo.",
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Ingrese un nombre claro y conciso'})
-    )
     description = forms.CharField(
+        max_length=250,
         widget=forms.Textarea(
             attrs={'placeholder': 'Proporcione una breve descripción del repositorio'}),
-        max_length=100,
         required=False,
         label="Descripción (opcional)",
         help_text="Describe el propósito y contenido del repositorio.",
     )
+
     remote = forms.CharField(
         max_length=100,
         label="URL del Remoto (Opcional)",
@@ -31,10 +33,3 @@ class RepoForm(forms.Form):
         widget=forms.TextInput(
             attrs={'placeholder': 'https://github.com/tu-usuario/tu-repositorio.git'})
     )
-
-    def save(self, username=None):
-        path = os.path.join(REPOS_DIR, username)
-        repo = CreateRepo(self.cleaned_data["name"], path)
-        repo.set_description(self.cleaned_data["description"])
-        repo.set_remote("origin", self.cleaned_data["remote"])
-        repo.create()

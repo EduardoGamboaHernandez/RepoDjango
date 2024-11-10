@@ -1,10 +1,12 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import RepoForm
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.conf import settings
 from .repository import GetRepoBranch
 from git.exc import NoSuchPathError
+from .models import RepoModel
+from django.contrib.auth.models import User
 import os
 
 
@@ -20,7 +22,6 @@ class CreateRepoView(generic.FormView):
     def form_valid(self, model):
         instance = model.save(commit=False)
         instance.user = self.request.user
-        instance.description = self.request.POST.get('description')
         instance.remote = self.request.POST.get('remote')
         instance.save()
         return super().form_valid(model)
@@ -31,9 +32,7 @@ class ShowRepoView(generic.View):
 
     def get(self, request, username, repo):
         branch_query = request.GET.getlist('branch')
-
         path = os.path.join(REPOS_DIR, username)
-
         context = {}
 
         try:
@@ -54,3 +53,13 @@ class ShowRepoView(generic.View):
             print("poner un 404: repositorio no encontrado")
 
         return render(request, self.template_name, context)
+
+
+class ShowListRepoView(generic.ListView):
+    template_name = "repository/list-repo.html"
+    model = RepoModel
+    paginate_by = 100
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs["username"])
+        return self.model.objects.filter(user=user)

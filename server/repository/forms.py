@@ -5,25 +5,19 @@ from .models import RepoModel
 class RepoForm(forms.ModelForm):
     class Meta:
         model = RepoModel
-        fields = ["name"]
+        fields = ["name", "description"]
         widgets = {
             "name": forms.TextInput(attrs={'placeholder': 'Ingrese un nombre claro y conciso'}),
+            "description": forms.Textarea(attrs={'placeholder': 'Proporcione una breve descripción del repositorio'}),
         }
         labels = {
             "name": "Nombre del Repositorio",
+            "description": "Descripción (opcional)",
         }
         help_texts = {
             "name": "El nombre del repositorio será utilizado para identificarlo.",
+            "description": "Describe el propósito y contenido del repositorio.",
         }
-
-    description = forms.CharField(
-        max_length=250,
-        widget=forms.Textarea(
-            attrs={'placeholder': 'Proporcione una breve descripción del repositorio'}),
-        required=False,
-        label="Descripción (opcional)",
-        help_text="Describe el propósito y contenido del repositorio.",
-    )
 
     remote = forms.CharField(
         max_length=100,

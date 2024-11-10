@@ -51,19 +51,13 @@
 
 {% block content %}
 <div class="container">
-
     <h4 class="title is-4">{{ info.name }}</h4>
     <p>{{ info.description }}</p>
     <hr>
     <div class="columns">
-
-
-
         <div class="column is-three-quarters">
-
             <div class="level">
                 <div class="level-left">
-
                     <div class="control has-icons-left">
                         <div class="select">
                             <select >
@@ -76,7 +70,6 @@
                             <i class="fas fa-code-branch"></i>
                         </div>
                     </div>
-
                 </div>
                 <div class="level-right">
                     <button class="button">
@@ -85,14 +78,12 @@
                         </span>
                         <span>16 commits</span>
                     </button>
-
                 </div>
             </div>
 
             <nav class="panel is-primary">
 
                 <a class="panel-block is-active last-commit ">
-
                     <div class="level is-full">
                         <div class="level-left">
                             <span id="autor" class="has-text-weight-bold has-text-primary">{{ last_commit.autor }}</span>
@@ -104,7 +95,6 @@
                             <p class="has-text-ellipsis">{{ last_commit.message }}</p>
                         </div>
                     </div>
-
                 </a>
                 
                 {% for obj in tree %}
@@ -132,7 +122,6 @@
                         <li><a href="#">{{tag}}</a></li>
                     {% endfor %}
                 </ul>
-
         </div>
     </div>
 </div>

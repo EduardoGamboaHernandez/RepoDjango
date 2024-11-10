@@ -16,7 +16,8 @@ class RepoModel(models.Model):
     hashid = HashidsField(real_field_name="id", min_length=6)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    description = None
+    description = models.CharField(max_length=600)
+    created = models.DateTimeField(auto_now_add=True)
     remote = None
 
     def __str__(self):

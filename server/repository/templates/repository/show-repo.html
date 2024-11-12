@@ -125,6 +125,10 @@
                         </span>
                         {{obj.name}}
                     </a>
+                {% empty %}
+                <div class="panel-block is-flex is-justify-content-center">
+                    <p class="has-text-ellipsis subtitle is-6">No hay archivos para mostrar</p>
+                </div>
                 {% endfor %}
             </nav>
 

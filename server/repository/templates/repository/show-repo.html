@@ -51,11 +51,27 @@
 
 {% block content %}
 <div class="container">
-    <h4 class="title is-4">{{ info.name }}</h4>
-    <p>{{ info.description }}</p>
+    
+    <div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-narrow">
+            <figure class="image is-64x64">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png" />
+            </figure>
+        </div>
+        <div class="column">
+            <p class="title is-4">name</p>
+            <p class="subtitle is-6">Username</p>
+        </div>
+    </div>
+
     <hr>
+
+    <h4 class="title is-4">{{ info.name }}</h4>
+    <p class="subtitle is-6">{{ info.description }}</p>
     <div class="columns">
         <div class="column is-three-quarters">
+
             <div class="level">
                 <div class="level-left">
                     <div class="control has-icons-left">
@@ -86,15 +102,16 @@
                 <a class="panel-block is-active last-commit ">
                     <div class="level is-full">
                         <div class="level-left">
-                            <span id="autor" class="has-text-weight-bold has-text-primary">{{ last_commit.autor }}</span>
+                            <span class="tag is-dark">de0ccb1</span>
                         </div>
                         <div class="level-right">
-                            <span class="tag is-primary">de0ccb1</span>
+                            <span id="autor" class="has-text-weight-bold has-text-primary">{{ last_commit.autor }}</span>
                         </div>
                         <div class="level-center">
                             <p class="has-text-ellipsis">{{ last_commit.message }}</p>
                         </div>
                     </div>
+
                 </a>
                 
                 {% for obj in tree %}
@@ -116,7 +133,7 @@
             </div>
         </div>
         <div class="column">
-            <h6 class="title is-6"><b>Releases</b></h6>
+            <h6 class="title is-6"><b>Tags</b></h6>
                 <ul>
                     {% for tag in tags %}
                         <li><a href="#">{{tag}}</a></li>

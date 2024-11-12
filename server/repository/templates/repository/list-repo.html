@@ -38,11 +38,27 @@
 
 {% block content %}
 <div class="container">
+
+    <div class="columns is-vcentered">
+        <div class="column is-narrow">
+            <figure class="image is-64x64">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png" />
+            </figure>
+        </div>
+        <div class="column">
+            <p class="title is-4">name</p>
+            <p class="subtitle is-6">Username</p>
+        </div>
+    </div>
+
+    <hr>
+
     <div class="columns">
         <div class="column is-three-quarters">
-            <div class="level">
-                <div class="level-left">
-                    <div class="control has-icons-left is-expanded">
+
+            <div class="columns">
+                <div class="column">
+                    <div class="control has-icons-left">
                         <div class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="repositorio">
                             <span class="icon is-left">
@@ -54,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="level-right">
+                <div class="column is-narrow">
                     <div class="control has-icons-left">
                         <div class="select">
                             <select>
@@ -69,18 +85,17 @@
                 </div>
             </div>
 
-
             <nav class="panel">
                 {% for repo in object_list %}
                     <a href="./{{repo.name}}" class="panel-block is-flex is-flex-direction-column is-align-items-self-start">
-    
+
                         <span class="has-text-weight-bold has-text-primary">{{repo.name}}</span>
                         <span class="has-text-ellipsis">{{repo.description}}</span>
-    
+
                         <div class="block">
                             <small class="is-small">creado el {{repo.created|date:'d \d\e M, Y '}}</small>
                         </div>
-    
+
                     </a>
                 {% empty %}
                 <a href="#" class="panel-block is-flex is-flex-direction-column is-align-items-self-start">

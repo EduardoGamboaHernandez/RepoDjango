@@ -27,6 +27,8 @@ class CreateRepo:
         if self._remote:
             self._repo.create_remote(self._remote[0], self._remote[1])
 
+        self._repo.index.commit("init: initial commit")
+
 
 class GetRepoBranch:
     def __init__(self, name: str, path_to_repos: str):

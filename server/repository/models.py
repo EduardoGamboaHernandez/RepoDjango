@@ -41,4 +41,7 @@ class RepoModel(models.Model):
 @receiver(models.signals.post_delete, sender=RepoModel)
 def delete_repo_hook(sender, instance, using, **kwargs):
     path = os.path.join(REPOS_DIR, instance.user.username, f"{instance.name}.git")
-    shutil.rmtree(path)
+    try:
+        shutil.rmtree(path)
+    except FileNotFoundError:
+        print("repositorio borrado")

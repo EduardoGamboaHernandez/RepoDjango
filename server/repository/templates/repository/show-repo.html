@@ -60,7 +60,7 @@
             </figure>
         </div>
         <div class="column">
-            <p class="title is-4">name</p>
+            <p class="title is-4">Full Name</p>
             <p class="subtitle is-6">Username</p>
         </div>
     </div>
@@ -138,11 +138,15 @@
         </div>
         <div class="column">
             <h6 class="title is-6"><b>Tags</b></h6>
-                <ul>
-                    {% for tag in tags %}
-                        <li><a href="#">{{tag}}</a></li>
-                    {% endfor %}
-                </ul>
+                <div class="panel-block">
+                    <ul>
+                        {% for tag in tags %}
+                            <li><a href="#">{{tag}}</a></li>
+                        {% empty %}
+                            <p class="has-text-ellipsis subtitle is-6">---</p>
+                        {% endfor %}
+                    </ul>
+                </div>
         </div>
     </div>
 </div>

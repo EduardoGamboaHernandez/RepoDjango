@@ -50,6 +50,7 @@
 
 
 {% block content %}
+{% load repo_tags %}
 <div class="container">
     
     <div class="container">
@@ -102,7 +103,7 @@
                 <a class="panel-block is-active last-commit ">
                     <div class="level is-full">
                         <div class="level-left">
-                            <span class="tag is-dark">de0ccb1</span>
+                            <span class="tag is-dark">{{ last_commit.hash|commit_short }}</span>
                         </div>
                         <div class="level-right">
                             <span id="autor" class="has-text-weight-bold has-text-primary">{{ last_commit.autor }}</span>
@@ -133,7 +134,7 @@
             </nav>
 
             <div class="panel readme">
-                <h3>readme</h3>
+                {% get_readme %}
             </div>
         </div>
         <div class="column">

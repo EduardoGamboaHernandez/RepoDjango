@@ -60,7 +60,7 @@ class GetRepoBranch:
     def get_tree(self, commit_hash):
         commit = self._repo.commit(commit_hash)
         tree = []
-        for tree_entry in commit.tree.traverse():
+        for tree_entry in commit.tree:
             tree.append({
                 "name": tree_entry.path,
                 "type": tree_entry.type,
@@ -71,3 +71,18 @@ class GetRepoBranch:
 
     def get_tags(self):
         return [tag.name for tag in self._repo.tags]
+
+
+class GetReadme:
+    def __init__(self, name: str, path_to_repos: str) -> None:
+        self.path_to_repos = path_to_repos
+        self.name_repo = name
+        repo_path = os.path.join(self.path_to_repos, f"{self.name_repo}.git")
+        self._repo = git.Repo(repo_path)
+
+    def get_readme(self, commit_hash):
+        commit = self._repo.commit('HEAD')
+        tree = commit.tree
+        blob = tree['README.md'].data_stream
+        content = blob.read().decode('utf-8')
+        return content

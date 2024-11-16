@@ -37,6 +37,7 @@
 
 
 {% block content %}
+{% load repo_tags %}
 <div class="container">
 
     <div class="columns is-vcentered">
@@ -93,7 +94,7 @@
                         <span class="has-text-ellipsis">{{repo.description}}</span>
 
                         <div class="block">
-                            <small class="is-small">creado el {{repo.created|date:'d \d\e M, Y '}}</small>
+                            <small class="is-small">creado el {{repo.created|branch_date}}</small>
                         </div>
 
                     </a>

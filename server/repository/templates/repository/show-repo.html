@@ -67,9 +67,6 @@
     </div>
 
     <hr>
-
-    <h4 class="title is-4">{{ info.name }}</h4>
-    <p class="subtitle is-6">{{ info.description }}</p>
     <div class="columns">
         <div class="column is-three-quarters">
 
@@ -89,12 +86,12 @@
                     </div>
                 </div>
                 <div class="level-right">
-                    <button class="button">
+                    <a href="{% url 'repo_list_commits' username repo %}" class="button">
                         <span class="icon">
                             <i class="fas fa-code-commit"></i>
                         </span>
-                        <span>16 commits</span>
-                    </button>
+                        <span>{{ info.total_commits }} commits</span>
+                    </a>
                 </div>
             </div>
 
@@ -138,16 +135,26 @@
             </div>
         </div>
         <div class="column">
-            <h6 class="title is-6"><b>Tags</b></h6>
+            
+            <div class="block">
+                <h4 class="title is-4">{{ info.name }}</h4>
+                <p class="subtitle is-6">{{ info.description }}</p>
+            </div>
+            <div class="block">
+                <h6 class="title is-6"><b>Tags</b></h6>
                 <div class="panel-block">
                     <ul>
                         {% for tag in tags %}
-                            <li><a href="#">{{tag}}</a></li>
+                        <li><a href="#">{{tag}}</a></li>
                         {% empty %}
-                            <p class="has-text-ellipsis subtitle is-6">---</p>
+                        <p class="has-text-ellipsis subtitle is-6">---</p>
                         {% endfor %}
                     </ul>
                 </div>
+            </div>
+
+            
+
         </div>
     </div>
 </div>

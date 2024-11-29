@@ -3,7 +3,7 @@ from django.views import generic
 from .forms import RepoForm
 from django.shortcuts import get_object_or_404, render
 from django.conf import settings
-from .repository import GetRepoBranch
+from .repository import GetRepoBranch, GetCommits
 from git.exc import NoSuchPathError
 from .models import RepoModel
 from django.contrib.auth.models import User
@@ -33,7 +33,10 @@ class ShowRepoView(generic.View):
     def get(self, request, username, repo):
         branch_query = request.GET.getlist('branch')
         path = os.path.join(REPOS_DIR, username)
-        context = {}
+        context = {
+            "username": username,
+            "repo": repo
+        }
 
         try:
             repo = GetRepoBranch(repo, path)
@@ -58,8 +61,24 @@ class ShowRepoView(generic.View):
 class ShowListRepoView(generic.ListView):
     template_name = "repository/list-repo.html"
     model = RepoModel
-    paginate_by = 100
+    paginate_by = 20
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
         return self.model.objects.filter(user=user)
+
+
+class ListCommitsView(generic.View):
+    template_name = "repository/list-commits.html"
+
+    def get(self, request, username, repo):
+        path = os.path.join(REPOS_DIR, username)
+        context = {}
+
+        try:
+            repo = GetCommits(repo, path)
+            context['commits_list'] = repo.commits()
+        except NoSuchPathError:
+            print("poner un 404: repositorio no encontrado")
+
+        return render(request, self.template_name, context)

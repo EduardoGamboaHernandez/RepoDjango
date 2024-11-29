@@ -43,8 +43,10 @@ class GetRepoBranch:
     def get_info(self, branch):
         if self._repo.bare:
             self.repo_dict["description"] = self._repo.description
-            self.repo_dict["brranches"] = [branch.name for branch in self._repo.branches]
+            self.repo_dict["brranches"] = [
+                branch.name for branch in self._repo.branches]
             self.repo_dict["active_branch"] = self._repo.active_branch.name
+            self.repo_dict["total_commits"] = len(list(self._repo.iter_commits('HEAD')))
         return self.repo_dict
 
     def get_last_commit(self, branch='HEAD'):
@@ -86,3 +88,43 @@ class GetReadme:
         blob = tree['README.md'].data_stream
         content = blob.read().decode('utf-8')
         return content
+
+
+class GetCommits:
+    def __init__(self, name: str, path_to_repos: str) -> None:
+        self.path_to_repos = path_to_repos
+        self.name_repo = name
+        repo_path = os.path.join(self.path_to_repos, f"{self.name_repo}.git")
+        self._repo = git.Repo(repo_path)
+
+    def commits(self):
+        commits = list(self._repo.iter_commits('HEAD'))
+
+        commits_list = []
+
+        date = ""
+        commits_obj_list = []
+
+        for commit in commits:
+            commited_datetime = commit.committed_datetime
+            if date == "":
+                date = commited_datetime.strftime('%Y-%m-%d')
+
+            if commited_datetime.strftime('%Y-%m-%d') == date:
+                commit_object = {
+                    "hash": commit.hexsha,
+                    "message": commit.message,
+                    "commiter": commit.committer.name,
+                    # "stats": commit.stats.files
+                }
+                commits_obj_list.append(commit_object)
+            else:
+                commits_dict = {
+                    "date": commited_datetime,
+                    "commits": commits_obj_list
+                }
+                commits_list.append(commits_dict)
+                commits_obj_list = []
+                date = ""
+
+        return commits_list

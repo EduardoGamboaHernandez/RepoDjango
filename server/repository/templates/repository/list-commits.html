@@ -119,8 +119,14 @@
                         <a href="#" class="panel-block columns">
                             <div class="is-flex is-flex-direction-column is-align-items-self-start">
                                 <span class="has-text-weight-bold has-text-primary">{{ commit.commiter }}</span>
-                                
                                 <span>{{ commit.message }}</span>
+                                
+                                <div>
+                                    <small class="has-text-text">{{commit.stats.files}} archivos:</small>
+                                    <small class="has-text-success">+{{ commit.stats.insertions }}</small>
+                                    <small class="has-text-danger">-{{ commit.stats.deletions }}</small>
+                                </div>
+                                
                                 <span class="tag is-dark">{{ commit.hash }}</span>
                             </div>
                         </a>

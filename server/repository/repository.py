@@ -115,7 +115,7 @@ class GetCommits:
                     "hash": commit.hexsha,
                     "message": commit.message,
                     "commiter": commit.committer.name,
-                    # "stats": commit.stats.files
+                    "stats": commit.stats.total
                 }
                 commits_obj_list.append(commit_object)
             else:

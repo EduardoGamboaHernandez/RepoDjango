@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import RepoForm
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
 from .repository import GetRepoBranch, GetCommits
 from git.exc import NoSuchPathError
@@ -13,7 +13,10 @@ import os
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
 
-# Create your views here.
+def home(request):
+    return redirect('repo_list', username=request.user.username)
+
+
 class CreateRepoView(generic.FormView):
     template_name = 'repository/create-repo.html'
     form_class = RepoForm

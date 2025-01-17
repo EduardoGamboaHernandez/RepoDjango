@@ -85,3 +85,19 @@ class ListCommitsView(generic.View):
             print("poner un 404: repositorio no encontrado")
 
         return render(request, self.template_name, context)
+
+
+class ShowFileView(generic.View):
+    template_name = "repository/show-file.html"
+
+    def get(self, request, username, repo, file):
+        path = os.path.join(REPOS_DIR, username)
+        context = {}
+
+        try:
+            repo = GetRepoBranch(repo, path)
+            context['file'] = repo.get_file_content("4d05683", file)
+        except NoSuchPathError:
+            print("poner un 404: archivo no encontrado")
+
+        return render(request, self.template_name, context)

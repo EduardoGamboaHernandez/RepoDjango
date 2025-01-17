@@ -74,6 +74,18 @@ class GetRepoBranch:
     def get_tags(self):
         return [tag.name for tag in self._repo.tags]
 
+    def get_file_content(self, commitSHA, filename):
+        file_basename = os.path.basename(filename)
+        commit = self._repo.commit(commitSHA)
+        tree = commit.tree
+        blob = tree[filename].data_stream
+        # Decodificar a UTF-8, ajusta según la codificación
+        content = blob.read().decode('utf-8')
+        return {
+            "name": file_basename,
+            "content": content
+        }
+
 
 class GetReadme:
     def __init__(self, name: str, path_to_repos: str) -> None:

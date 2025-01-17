@@ -1,0 +1,193 @@
+{% extends "base/base.html" %}
+
+{% block styles %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
+
+
+<script>
+    hljs.configure({
+        languages: ['javascript', 'python', 'css'],
+        ignoreUnmatched: true,
+        tabReplace: '  ', // Reemplazar tabulaciones con dos espacios
+        classPrefix: 'hljs-' // Agregar el prefijo 'hljs-' a las clases CSS
+    });
+
+
+    hljs.highlightAll();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+<style type="text/css" media="screen">
+    pre code {
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    
+
+    .panel {
+        --bulma-panel-heading-padding: 0.5em 0.75em;
+        --bulma-shadow: none;
+        --bulma-panel-heading-size: 1em;
+        border: var(--bulma-panel-item-border);
+        --bulma-panel-heading-weight: 400;
+
+        overflow: hidden;
+
+    }
+
+    .last-commit {
+        background: var(--bulma-panel-block-hover-background-color)
+    }
+
+    .navbar {
+        margin-bottom: 2.5em;
+    }
+
+
+.tomorrow-comment,
+.hljs-comment,
+.hljs-title {
+    color: #969896;
+}
+
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-selector-tag,
+.hljs-selector-pseudo,
+.hljs-selector-attr{
+    color: #e892bf;
+}
+
+
+.hljs-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-regexp,
+.hljs-ruby .constant,
+.hljs-xml .tag .title,
+.hljs-xml .pi,
+.hljs-xml .doctype,
+.hljs-html .doctype,
+.hljs-css .id,
+.hljs-css .class,
+.hljs-css .pseudo {
+    color: #cc6666;
+}
+
+.tomorrow-orange,
+.hljs-number,
+.hljs-preprocessor,
+.hljs-built_in,
+.hljs-literal,
+.hljs-params,
+.hljs-constant {
+    color: #de935f;
+}
+
+.tomorrow-yellow,
+.hljs-class,
+.hljs-ruby .class .title,
+.hljs-css .rules .attribute {
+    color: #f0c674;
+}
+
+.tomorrow-green,
+.hljs-string,
+.hljs-value,
+.hljs-inheritance,
+.hljs-header,
+.hljs-ruby .symbol,
+.hljs-xml .cdata {
+    color: #b5bd68;
+}
+
+.tomorrow-aqua,
+.hljs-css .hexcolor {
+    color: #8abeb7;
+}
+
+.tomorrow-blue,
+.hljs-function,
+.hljs-python .decorator,
+.hljs-python .title,
+.hljs-ruby .function .title,
+.hljs-ruby .title .keyword,
+.hljs-perl .sub,
+.hljs-javascript .title,
+.hljs-coffeescript .title {
+    color: #81a2be;
+}
+
+.tomorrow-purple,
+.hljs-keyword,
+.hljs-javascript .function {
+    color: #b294bb;
+}
+
+pre code {
+    display: block;
+    background: #282b2e73;
+    color: #c5c8c6;
+    font-family: Menlo, Monaco, Consolas, monospace;
+    line-height: 1.5;
+    padding: 10px;
+    position: relative;
+}
+
+
+td.hljs-ln-line.hljs-ln-numbers {
+    position: relative;
+    padding-right: 1.5em;
+    padding-left: 0.5em;
+}
+
+.hljs-line-sign {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1.5em;
+}
+
+
+.hljs-ln {
+    width: 100%;
+}
+</style>
+
+{% endblock styles %}
+
+
+
+{% block content %}
+{% load repo_tags %}
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-narrow">
+            <figure class="image is-64x64">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png" />
+            </figure>
+        </div>
+        <div class="column">
+            <p class="title is-4">Full Name</p>
+            <p class="subtitle is-6">Username</p>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <div class="columns">
+        
+        
+        
+        <div class="column is-full">
+            
+            <h4 class="title is-4">{{ file.name }}</h4>
+
+            <pre><code class="html">{{ file.content }}</code></pre>
+        </div>
+    </div>
+</div>
+{% endblock content %}

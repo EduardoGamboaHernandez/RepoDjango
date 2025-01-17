@@ -113,7 +113,7 @@
                 </a>
                 
                 {% for obj in tree %}
-                    <a class="panel-block">
+                    <a class="panel-block" href="{% url "repo_show_file" username repo obj.name %}">
                         <span class="panel-icon">
                             {% if obj.type == "tree" %}
                                 <i class="fas fa-folder">f</i>

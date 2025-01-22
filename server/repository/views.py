@@ -13,6 +13,7 @@ from .RepoLib.commit import Commit
 from .RepoLib.files import Files
 
 
+# Directorio de los repositorios
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
 
@@ -21,6 +22,9 @@ def home(request):
 
 
 class CreateRepoView(generic.FormView):
+    """
+    vista del formulario para crear los repositorios
+    """
     template_name = 'repository/create-repo.html'
     form_class = RepoForm
     success_url = reverse_lazy('repo_create')
@@ -34,6 +38,9 @@ class CreateRepoView(generic.FormView):
 
 
 class ShowRepoView(generic.View):
+    """
+    vista del repositorios de un usuario
+    """
     template_name = "repository/show-repo.html"
 
     def get(self, request, username, reponame):
@@ -48,7 +55,6 @@ class ShowRepoView(generic.View):
             repo = Repo(reponame, path)
             commit = Commit(reponame, path)
             files = Files(reponame, path)
-
             info = repo.get_info("main")
 
             if branch_query:
@@ -68,6 +74,9 @@ class ShowRepoView(generic.View):
 
 
 class ShowListRepoView(generic.ListView):
+    """
+    listado de los repositorios de un usuario
+    """
     template_name = "repository/list-repo.html"
     model = RepoModel
     paginate_by = 20
@@ -78,12 +87,14 @@ class ShowListRepoView(generic.ListView):
 
 
 class ListCommitsView(generic.View):
+    """
+    listado de los commit de un usuario
+    """
     template_name = "repository/list-commits.html"
 
     def get(self, request, username, repo):
         path = os.path.join(REPOS_DIR, username)
         context = {}
-
         try:
             commit = Commit(repo, path)
             context['commits_list'] = commit.get_commit_list()
@@ -94,12 +105,14 @@ class ListCommitsView(generic.View):
 
 
 class ShowFileView(generic.View):
+    """
+    vista del contenido de un archivo solicitado
+    """
     template_name = "repository/show-file.html"
 
     def get(self, request, username, repo, file):
         path = os.path.join(REPOS_DIR, username)
         context = {}
-
         try:
             files = Files(repo, path)
             context['file'] = files.get_file_content("4d05683", file)

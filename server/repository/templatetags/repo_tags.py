@@ -1,5 +1,5 @@
 from django import template
-from ..repository import GetReadme
+from ..RepoLib.files import Files
 from django.conf import settings
 import markdown
 import git
@@ -45,9 +45,10 @@ def get_readme(context):
     content = "No hay nada para mostrar"
     try:
         path = os.path.join(REPOS_DIR, context["user"].username)
-        readme = GetReadme(context["info"]["name"], path)
-        readme_content = readme.get_readme(context["last_commit"]["hash"])
-        content = markdown.markdown(readme_content)
+        readme = Files(context["info"]["name"], path)
+
+        readme_content = readme.get_file_content(context["last_commit"]["hash"], "README.md")
+        content = markdown.markdown(readme_content["content"])
     except git.exc.NoSuchPathError:
         print("repositorio no existe")
     except KeyError:

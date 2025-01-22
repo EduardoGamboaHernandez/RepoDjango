@@ -3,6 +3,9 @@ from .models import RepoModel
 
 
 class RepoForm(forms.ModelForm):
+    """
+    Formulario para registrar los repositorios de los usuarios
+    """
     class Meta:
         model = RepoModel
         fields = ["name", "description"]

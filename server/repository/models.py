@@ -2,16 +2,15 @@ from django.db import models
 from django_hashids import HashidsField
 from django.contrib.auth.models import User
 from django.conf import settings
-from .repository import CreateRepo
 from django.dispatch import receiver
 import shutil
 import os
 
+from .RepoLib.bare import Bare
 
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
 
-# Create your models here.
 class RepoModel(models.Model):
     hashid = HashidsField(real_field_name="id", min_length=6)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,15 +24,9 @@ class RepoModel(models.Model):
 
     def save(self, *args, **kwargs):
         path = os.path.join(REPOS_DIR, self.user.username)
-        repo = CreateRepo(self.name, path)
+        repo = Bare(self.name, path)
 
-        if self.description:
-            repo.set_description(self.description)
-
-        if self.remote:
-            repo.set_remote("origin", self.remote)
-
-        repo.create()
+        repo.create(self.description, self.remote)
 
         return super().save(*args, **kwargs)
 

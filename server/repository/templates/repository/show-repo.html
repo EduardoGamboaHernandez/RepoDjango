@@ -145,7 +145,7 @@
                 <div class="panel-block">
                     <ul>
                         {% for tag in tags %}
-                        <li><a href="#">{{tag}}</a></li>
+                        <li><a href="#">{{ tag.name }}</a></li>
                         {% empty %}
                         <p class="has-text-ellipsis subtitle is-6">---</p>
                         {% endfor %}

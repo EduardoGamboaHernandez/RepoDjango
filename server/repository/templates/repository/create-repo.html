@@ -1,57 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "repository/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-</head>
+{% block content %}
+{% load crispy_forms_filters %}
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-7">
+            <h4 class="title is-4">Crear Nuevo Repositorio</h4>
+            <p class="subtitle is-6">
+                Almacena de forma segura el código de configuración de tu servidor privado
+            </p>
 
-<body>
+            <hr />
 
-    {% load crispy_forms_filters %}
-
-    <section class="section">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-7">
-                    <h4 class="title is-4">Crear Nuevo Repositorio</h4>
-                    <p class="subtitle is-6">
-                        Almacena de forma segura el código de configuración de tu servidor privado
-                    </p>
-
-                    <hr />
-
-                    <form action="{% url "repo_create" %}" method="post">
-                        {% csrf_token %}
-                        <div class="field">
-                            <div class="control">
-                                {{ form.name|as_crispy_field}}
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <div class="control">
-                                {{ form.description|as_crispy_field}}
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <div class="field">
-                            <div class="control">
-                                {{ form.remote|as_crispy_field}}
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <button class="button is-primary">Crear repositorio</button>
-                    </form>
+            <form action="{% url "repo_create" %}" method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <!-- campo de nombre -->
+                    <div class="field">
+                        {{ form.name|as_crispy_field}}
+                    </div>
+                    <!-- fin -->
                 </div>
-            </div>
+
+                <div class="field">
+                    <!-- descripcion -->
+                    {{ form.description|as_crispy_field}}
+                    <!-- fin -->
+                </div>
+
+                <hr />
+
+                <div class="field">
+                    <!-- remotos -->
+                    {{ form.remote|as_crispy_field}}
+
+                    <!-- fin -->
+                </div>
+
+                <hr />
+
+                <button class="button is-primary">Crear repositorio</button>
+            </form>
+
         </div>
-    </section>
-</body>
-</html>
+    </div>
+</section>
+{% endblock content %}

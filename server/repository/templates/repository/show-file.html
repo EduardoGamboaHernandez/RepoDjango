@@ -1,50 +1,15 @@
-{% extends "base/base.html" %}
+{% extends "repository/base.html" %}
 
-{% block styles %}
+{% block headers %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
+{% endblock headers %}
 
-
-<script>
-    hljs.configure({
-        languages: ['javascript', 'python', 'css'],
-        ignoreUnmatched: true,
-        tabReplace: '  ', // Reemplazar tabulaciones con dos espacios
-        classPrefix: 'hljs-' // Agregar el prefijo 'hljs-' a las clases CSS
-    });
-
-
-    hljs.highlightAll();
-    hljs.initLineNumbersOnLoad();
-</script>
-
-<style type="text/css" media="screen">
-    pre code {
-        white-space: pre-wrap;
-        overflow-x: auto;
-    }
-
-    
-
-    .panel {
-        --bulma-panel-heading-padding: 0.5em 0.75em;
-        --bulma-shadow: none;
-        --bulma-panel-heading-size: 1em;
-        border: var(--bulma-panel-item-border);
-        --bulma-panel-heading-weight: 400;
-
-        overflow: hidden;
-
-    }
-
-    .last-commit {
-        background: var(--bulma-panel-block-hover-background-color)
-    }
-
-    .navbar {
-        margin-bottom: 2.5em;
-    }
-
+{% block styles %}
+pre code {
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
 
 .tomorrow-comment,
 .hljs-comment,
@@ -152,42 +117,41 @@ td.hljs-ln-line.hljs-ln-numbers {
 
 
 .hljs-ln {
-    width: 100%;
+    {% comment %} width: 100%; {% endcomment %}
 }
-</style>
 
 {% endblock styles %}
 
-
-
 {% block content %}
 {% load repo_tags %}
-<div class="container">
+<section class="section">
     <div class="columns is-vcentered">
         <div class="column is-narrow">
-            <figure class="image is-64x64">
-                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png" />
+            <figure class="image is-32x32">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png">
             </figure>
         </div>
+
         <div class="column">
-            <p class="title is-4">Full Name</p>
-            <p class="subtitle is-6">Username</p>
+            <p class="title is-5">{{ repo }}:{{ file.name }}</p>
         </div>
     </div>
+</section>
 
+<hr>
+<section class="section">
+    <pre><code class="html">{{ file.content }}</code></pre>
+</section>
 
-    <hr>
+<script>
+    hljs.configure({
+        languages: ['javascript', 'python', 'css'],
+        ignoreUnmatched: true,
+        tabReplace: '  ', // Reemplazar tabulaciones con dos espacios
+        classPrefix: 'hljs-' // Agregar el prefijo 'hljs-' a las clases CSS
+    });
 
-    <div class="columns">
-        
-        
-        
-        <div class="column is-full">
-            
-            <h4 class="title is-4">{{ file.name }}</h4>
-
-            <pre><code class="html">{{ file.content }}</code></pre>
-        </div>
-    </div>
-</div>
+    hljs.highlightAll();
+    hljs.initLineNumbersOnLoad();
+</script>
 {% endblock content %}

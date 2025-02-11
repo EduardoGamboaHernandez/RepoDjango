@@ -1,113 +1,69 @@
-{% extends "base/base.html" %}
-
-{% block styles %}
-<style>
-    .panel {
-        --bulma-panel-heading-padding: 0.5em 0.75em;
-        --bulma-shadow: none;
-        --bulma-panel-heading-size: 1em;
-        border: var(--bulma-panel-item-border);
-        --bulma-panel-heading-weight: 400;
-
-        overflow: hidden;
-
-    }
-
-    .navbar {
-        margin-bottom: 2.5em;
-    }
-
-
-    .has-text-ellipsis {
-        display: -webkit-box;
-        line-clamp: 1;
-        -webkit-line-clamp: 1;
-        /* Ajusta el número de líneas aquí */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .is-small {
-        color: var(--bulma-text)
-    }
-</style>
-{% endblock styles %}
-
-
+{% extends "repository/base.html" %}
 
 {% block content %}
 {% load repo_tags %}
-<div class="container">
 
+<section class="section">
     <div class="columns is-vcentered">
         <div class="column is-narrow">
-            <figure class="image is-64x64">
-                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png" />
+            <figure class="image is-48x48">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png">
             </figure>
         </div>
+
         <div class="column">
-            <p class="title is-4">Full Name</p>
+            <p class="title is-5">Full Name</p>
             <p class="subtitle is-6">Username</p>
         </div>
     </div>
+</section>
 
-    <hr>
+<hr>
 
-    <div class="columns">
-        <div class="column is-three-quarters">
-
-            <div class="columns">
-                <div class="column">
-                    <div class="control has-icons-left">
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" placeholder="repositorio">
-                            <span class="icon is-left">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <span class="icon is-right">
-                                <i class="fas fa-code"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column is-narrow">
-                    <div class="control has-icons-left">
-                        <div class="select">
-                            <select>
-                                <option value="main">Nombre</option>
-                                <option value="develop">Fecha de creacion</option>
-                            </select>
-                        </div>
-                        <div class="icon is-small is-left">
-                            <i class="fas fa-sort"></i>
-                        </div>
-                    </div>
-                </div>
+<div class="columns">
+    <div class="column">
+        <div class="control has-icons-left">
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" id="searchRepo" placeholder="repositorio">
+                <span class="icon is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="icon is-right">
+                    <i class="fas fa-code"></i>
+                </span>
             </div>
-
-            <nav class="panel">
-                {% for repo in object_list %}
-                    <a href="./{{repo.name}}" class="panel-block is-flex is-flex-direction-column is-align-items-self-start">
-
-                        <span class="has-text-weight-bold has-text-primary">{{repo.name}}</span>
-                        <span class="has-text-ellipsis">{{repo.description}}</span>
-
-                        <div class="block">
-                            <small class="is-small">creado el {{repo.created|branch_date}}</small>
-                        </div>
-
-                    </a>
-                {% empty %}
-                <div class="panel-block is-flex is-justify-content-center">
-                    <p class="has-text-ellipsis subtitle is-6">No hay repositorios para mostrar</p>
-                </div>
-                {% endfor %}
-            </nav>
         </div>
-        <div class="column">
+    </div>
 
+    <div class="column is-narrow">
+        <div class="control has-icons-left">
+            <div class="select">
+                <select>
+                    <option value="main">Nombre</option>
+                    <option value="develop">Fecha de creacion</option>
+                </select>
+            </div>
+            <div class="icon is-small is-left">
+                <i class="fas fa-sort"></i>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="panel">
+    {% for repo in object_list %}
+    <a href="{{repo.name}}" class="panel-block is-flex is-flex-direction-column is-align-items-self-start">
+        <span class="has-text-weight-bold has-text-primary">{{repo.name}}</span>
+        <span class="has-text-ellipsis">{{repo.description}}</span>
+        <div class="block">
+            <small class="is-small">creado el {{repo.created|branch_date}}</small>
+        </div>
+    </a>
+    {% empty %}
+    <div class="panel-block is-flex is-justify-content-center">
+        <p class="has-text-ellipsis subtitle is-6">No hay repositorios para mostrar</p>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock content %}

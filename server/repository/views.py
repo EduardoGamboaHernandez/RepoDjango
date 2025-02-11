@@ -112,7 +112,9 @@ class ShowFileView(generic.View):
 
     def get(self, request, username, repo, file):
         path = os.path.join(REPOS_DIR, username)
-        context = {}
+        context = {
+            "repo": repo
+        }
         try:
             files = Files(repo, path)
             context['file'] = files.get_file_content("4d05683", file)

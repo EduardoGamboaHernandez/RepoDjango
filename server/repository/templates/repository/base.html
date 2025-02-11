@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>base</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    
+    {% comment %} <link rel="stylesheet" href="http://192.168.1.81/fontawesome-free-6.7.2-web/css/all.min.css"> {% endcomment %}
+    
+    {% block headers %}
+    {% endblock headers %}
+    
+    <style>
+        .navbar-brand {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .section {
+            padding: 1.5rem 1.5rem;
+            padding-bottom: 0;
+        }
+        
+        .panel {
+            --bulma-panel-heading-padding: 0.5em 0.75em;
+            --bulma-shadow: none;
+            --bulma-panel-heading-size: 1em;
+            border: var(--bulma-panel-item-border);
+            --bulma-panel-heading-weight: 400;
+            
+            overflow: hidden;
+            
+        }
+        
+        
+        .has-text-ellipsis {
+            display: -webkit-box;
+            line-clamp: 1;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .is-small {
+            color: var(--bulma-text)
+        }
+        
+        .panel-head {
+            background: var(--bulma-panel-block-hover-background-color)
+        }
+        {% block styles %}
+        {% endblock styles %}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            
+            <div class="navbar-item">
+                <a class="navbar-item" href="#"><img src="img/full-logo.svg" alt="logo"></a>
+            </div>
+            
+            <div class="navbar-item">
+                <a class="button is-light">
+                    <strong>Salir</strong>
+                    <span class="icon">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </span>
+                    
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    
+</body>
+
+</html>

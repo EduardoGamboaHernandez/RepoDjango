@@ -4,3 +4,4 @@ crispy-bulma==0.11.0
 django-login-required-middleware==0.9.0
 python-dotenv==1.0.1
 django-hashids==0.7.0
+Markdown==3.7

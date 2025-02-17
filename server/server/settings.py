@@ -15,13 +15,11 @@ from dotenv import load_dotenv
 import os
 
 
-dotenv_path = Path('../.env')
-load_dotenv(dotenv_path=dotenv_path)
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_path = Path(BASE_DIR, '../.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/

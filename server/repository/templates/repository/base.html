@@ -7,7 +7,7 @@
     <title>base</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     
-    {% comment %} <link rel="stylesheet" href="http://192.168.1.81/fontawesome-free-6.7.2-web/css/all.min.css"> {% endcomment %}
+    <link rel="stylesheet" href="http://192.168.1.81/fontawesome-free-6.7.2-web/css/all.min.css">
     
     {% block headers %}
     {% endblock headers %}
@@ -60,17 +60,20 @@
         <div class="navbar-brand">
             
             <div class="navbar-item">
-                <a class="navbar-item" href="#"><img src="img/full-logo.svg" alt="logo"></a>
+                <a class="navbar-item" href="#"><img src="http://192.168.1.81/img/full-logo.svg" alt="logo"></a>
             </div>
             
             <div class="navbar-item">
-                <a class="button is-light">
-                    <strong>Salir</strong>
-                    <span class="icon">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </span>
-                    
-                </a>
+                <form action="{% url 'logout_user' %}" method="post">
+                    {% csrf_token %}
+                    <button class="button is-light">
+                        <strong>Salir</strong>
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                    </button>
+                </form>
+
             </div>
         </div>
     </nav>

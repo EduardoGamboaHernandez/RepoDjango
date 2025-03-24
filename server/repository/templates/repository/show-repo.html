@@ -55,7 +55,7 @@
             <a class="panel-block is-active panel-head">
                 <div class="level is-full">
                     <div class="level-left">
-                        <span class="tag is-dark">{{ last_commit.hash|commit_short }}</span>
+                        <span class="tag is-dark is-uppercase is-family-monospace">{{ last_commit.hash|commit_short }}</span>
                     </div>
                     <div class="level-right">
                         <span id="autor" class="has-text-weight-bold has-text-primary">{{ last_commit.autor }}</span>
@@ -97,11 +97,19 @@
 
         <div class="block">
             <h6 class="title is-6"><b>Tags:</b></h6>
+
             <ul>
                 {% for tag in tags %}
-                <a href="#" class="tag">{{ tag.name }}</a>
+                <a href="{{ tag.commit }}" class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons is-family-monospace">
+                            <span class="tag is-dark is-uppercase">{{ tag.commit|commit_short }}</span>
+                            <span class="tag is-info">{{ tag.name }}</span>
+                        </div>
+                    </div>
+                </a>
                 {% empty %}
-                <span class="tag">---</span>
+                <span class="tag">Todavia no hay tags</span>
                 {% endfor %}
             </ul>
         </div>

@@ -13,6 +13,10 @@
     {% endblock headers %}
     
     <style>
+        :root {
+            --bulma-radius: 0.2rem;
+        }
+
         .navbar-brand {
             width: 100%;
             justify-content: space-between;
@@ -30,7 +34,7 @@
             --bulma-panel-heading-weight: 400;
             
             overflow: hidden;
-            
+            --bulma-panel-radius: var(--bulma-radius);
         }
         
         

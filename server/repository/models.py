@@ -6,7 +6,7 @@ from django.dispatch import receiver
 import shutil
 import os
 
-from .RepoLib.bare import Bare
+from .RepoLib.RepoLib import RepoLib
 
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
@@ -28,7 +28,7 @@ class RepoModel(models.Model):
     def save(self, *args, **kwargs):
         path = os.path.join(REPOS_DIR, self.user.username)
         # Crear el repositorio
-        repo = Bare(self.name, path)
+        repo = RepoLib(self.name, path)
         repo.create(self.description, self.remote)
 
         return super().save(*args, **kwargs)

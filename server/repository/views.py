@@ -8,9 +8,7 @@ from .models import RepoModel
 from django.contrib.auth.models import User
 import os
 
-from .RepoLib.repo import Repo
-from .RepoLib.commit import Commit
-from .RepoLib.files import Files
+from .RepoLib.RepoLib import RepoLib
 
 
 # Directorio de los repositorios
@@ -52,16 +50,15 @@ class ShowRepoView(generic.View):
         }
 
         try:
-            repo = Repo(reponame, path)
-            commit = Commit(reponame, path)
-            files = Files(reponame, path)
+            repo = RepoLib(reponame, path)
+            repo.init()
             info = repo.get_info("main")
 
             if branch_query:
                 info["active_branch"] = branch_query[0]
 
-            last_commit = commit.get_last_commit(info["active_branch"])
-            tree = files.get_tree(last_commit["hash"])
+            last_commit = repo.get_last_commit(info["active_branch"])
+            tree = repo.get_tree(last_commit["hash"])
             tags = tags = repo.get_tags()
             context["info"] = info
             context["last_commit"] = last_commit
@@ -96,8 +93,9 @@ class ListCommitsView(generic.View):
         path = os.path.join(REPOS_DIR, username)
         context = {}
         try:
-            commit = Commit(repo, path)
-            context['commits_list'] = commit.get_commit_list()
+            repo = RepoLib(repo, path)
+            repo.init()
+            context['commits_list'] = repo.get_commit_list()
         except NoSuchPathError:
             print("poner un 404: repositorio no encontrado")
 
@@ -116,8 +114,9 @@ class ShowFileView(generic.View):
             "repo": repo
         }
         try:
-            files = Files(repo, path)
-            context['file'] = files.get_file_content("4d05683", file)
+            repo = RepoLib(repo, path)
+            repo.init()
+            context['file'] = repo.get_file_content("4d05683", file)
         except NoSuchPathError:
             print("poner un 404: archivo no encontrado")
 

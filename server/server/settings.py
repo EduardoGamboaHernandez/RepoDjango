@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
 CRISPY_TEMPLATE_PACK = "bulma"
 
-REPOS_DIR = "/home/eduardo/dev/server/repos/"
+REPOS_DIR = os.getenv('REPOS_DIR')
 
 LOGIN_REDIRECT_URL = "inicio"
 LOGOUT_REDIRECT_URL = 'login_user'
@@ -155,3 +155,5 @@ LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
 ]
 
 DJANGO_HASHIDS_SALT = 'git_salt'
+
+STATIC_CDN_URL = os.getenv('STATIC_CDN_URL')

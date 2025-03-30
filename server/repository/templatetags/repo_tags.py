@@ -61,3 +61,9 @@ def get_readme(context):
     return {
         "readme": content,
     }
+
+
+@register.filter(name='get_CDN')
+def get_CDN(URI):
+    CDN = getattr(settings, "STATIC_CDN_URL", None)
+    return f"{CDN}/{URI}"

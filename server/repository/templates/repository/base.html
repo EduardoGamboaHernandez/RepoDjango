@@ -1,3 +1,4 @@
+{% load repo_tags %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>base</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    
-    <link rel="stylesheet" href="http://192.168.1.81/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="{{ "fontawesome-free-6.7.2-web/css/all.min.css"|get_CDN }}">
     
     {% block headers %}
     {% endblock headers %}
@@ -64,7 +64,7 @@
         <div class="navbar-brand">
             
             <div class="navbar-item">
-                <a class="navbar-item" href="#"><img src="http://192.168.1.81/img/full-logo.svg" alt="logo"></a>
+                <a class="navbar-item" href="#"><img src="{{ "img/full-logo.svg"|get_CDN }}" alt="logo"></a>
             </div>
             
             <div class="navbar-item">

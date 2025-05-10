@@ -24,10 +24,13 @@ class RepoLib:
         # ruta completa del repositorio bare
         self.path_repo = os.path.join(self.path_repos, f"{self.name_repo}.git")
 
-    def init(self):
+    def init(self) -> None:
+        """
+        función para iniciar el repositorio Bare y poder obtener sus datos
+        """
         self.repo = git.Repo(self.path_repo)
 
-    def get_info(self, branch: str = "HEAD"):
+    def get_info(self, branch: str = "HEAD") -> dict[str, any]:
         """
         retorna un diccionario con la informacion de un repositorio
 
@@ -58,7 +61,12 @@ class RepoLib:
         tags = []
         if self.repo.bare:
             for tag in self.repo.tags:
-                tags.append({"name": tag.name, "commit": tag.commit.hexsha})
+                tags_dict = {
+                    "name": tag.name,
+                    "message": tag.tag.message,
+                    "commit": tag.commit.hexsha,
+                }
+                tags.append(tags_dict)
         return tags
 
     def get_tree(self, commitSHA: str, iterate: bool = False) -> list:
@@ -67,7 +75,7 @@ class RepoLib:
         commit o solo los primeros archivos y carpetas
 
         Args:
-            commitSHA (str): hexsha del comit para consultar
+            commitSHA (str): hexsha del commit para consultar
             iterate (str): sí es True devuelve el contenido total de archivos y carpetas
 
         Returns:
@@ -103,7 +111,7 @@ class RepoLib:
         retorna el contenido de un archivo de un commit.
 
         Args:
-            commitSHA (str): hexsha del comit para buscar el archivo
+            commitSHA (str): hexsha del commit para buscar el archivo
             filename (str): nombre del archivo a consultar
 
         Returns:
@@ -168,11 +176,28 @@ class RepoLib:
         Returns:
             dict: el ultimo commit de la rama.
         """
-        commit = list(self.repo.iter_commits(branch, max_count=1))[0]
+        commit = self.repo.commit(f"{branch}~0")
+        return self._commit_dict(commit)
+
+    def get_commit_info(self, commitSHA: str) -> dict:
+        """
+        obtiene informacion de un commit.
+
+        Args:
+            commitSHA (str): sha del commit.
+
+        Returns:
+            dict: el ultimo commit de la rama.
+        """
+
+        commit = self.repo.commit(commitSHA)
+        return self._commit_dict(commit)
+
+    def _commit_dict(self, commit):
         commit_dict = {
             "hash": commit.hexsha,
             "message": commit.message,
-            "autor": commit.author.name,
+            "author": commit.author.name,
             "date": commit.committed_datetime.strftime("%Y-%m-%d"),
         }
         return commit_dict
@@ -191,3 +216,48 @@ class RepoLib:
             repo_bare.description = description
         if remote:
             repo_bare.create_remote(remote[0], remote[1])
+
+    def diff_commits(self, commitSHA_a: str, commitSHA_b: str = None) -> dict[str, any]:
+        """
+        retorna una diccionario de diferencias entre dos commits.
+
+        Args:
+            commitSHA_a (str): primer commit a comparar
+            commitSHA_b (str): segundo commit a comparar
+
+        Returns:
+            dict: diccionario de las diferencias entre dos commits
+        """
+
+        commitSHA_a = self.repo.commit(commitSHA_a)
+
+        if commitSHA_b:
+            commitSHA_b = self.repo.commit(commitSHA_b)
+        else:
+            commitSHA_b = commitSHA_a.parents[0]
+
+        diff = commitSHA_b.diff(commitSHA_a)
+
+        changes_dict = {
+            "a_hexsha": commitSHA_a.hexsha,
+            "b_hexsha": commitSHA_b.hexsha,
+            "changes": [],
+        }
+
+        for change in diff:
+            change_dict = {
+                "type": change.change_type,
+            }
+
+            if change.change_type == "R":
+                change_dict["data"] = {
+                    "rename_from": change.rename_from,
+                    "rename_to": change.rename_to,
+                }
+            else:
+                filename = change.a_path if change.a_path else change.b_path
+                change_dict["data"] = {"filename": filename}
+
+            changes_dict["changes"].append(change_dict)
+
+        return changes_dict

@@ -91,7 +91,10 @@ class ListCommitsView(generic.View):
 
     def get(self, request, username, repo):
         path = os.path.join(REPOS_DIR, username)
-        context = {}
+        context = {
+            "username": username,
+            "repo": repo
+        }
         try:
             repo = RepoLib(repo, path)
             repo.init()
@@ -117,6 +120,33 @@ class ShowFileView(generic.View):
             repo = RepoLib(repo, path)
             repo.init()
             context['file'] = repo.get_file_content("4d05683", file)
+        except NoSuchPathError:
+            print("poner un 404: archivo no encontrado")
+
+        return render(request, self.template_name, context)
+
+
+class DiffCommit(generic.View):
+    """
+    vista de las diferencias de un commit con su padre
+    """
+    template_name = "repository/diff-commit.html"
+
+    def get(self, request, username, repo, commit_a, commit_b=None):
+        path = os.path.join(REPOS_DIR, username)
+        context = {
+            "repo": repo
+        }
+
+        try:
+            repo = RepoLib(repo, path)
+            repo.init()
+
+            diff = repo.diff_commits(commit_a, commit_b)
+            context['diff'] = diff
+
+            context['commit_a_info'] = repo.get_commit_info(diff['a_hexsha'])
+            context['commit_b_info'] = repo.get_commit_info(diff['b_hexsha'])
         except NoSuchPathError:
             print("poner un 404: archivo no encontrado")
 

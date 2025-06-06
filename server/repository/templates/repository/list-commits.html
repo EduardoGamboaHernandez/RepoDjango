@@ -74,7 +74,7 @@
         </a>
 
         {% for commit in commits.commits %}
-        <a href="#" class="panel-block columns">
+        <a href="{% url 'repo_commit_compare_1' username repo commit.hash%}" class="panel-block columns">
             <div class="is-flex is-flex-direction-column is-align-items-self-start">
                 <span class="has-text-weight-bold has-text-primary">{{ commit.commiter }}</span>
                 <span>{{ commit.message }}</span>

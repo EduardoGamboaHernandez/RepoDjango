@@ -1,0 +1,81 @@
+{% extends "repository/base.html" %}
+
+{% block content %}
+
+<section class="section">
+    <div class="columns is-vcentered">
+        <div class="column is-narrow">
+            <figure class="image is-48x48">
+                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/64x64.png">
+            </figure>
+        </div>
+
+        <div class="column">
+            <p class="title is-5">Repo Name</p>
+        </div>
+    </div>
+</section>
+
+<hr />
+
+{% for change in diff.changes%}
+{% if change.type == "D" %}
+<div class="panel">
+    <div class="panel-block">
+        <span class="icon has-text-danger">
+            <i class="fa-solid fa-trash-can"></i>
+        </span>
+        <span>
+            Archivo <b class="has-text-danger">{{change.data.filename}}</b> eliminado
+        </span>
+    </div>
+</div>
+
+{% elif change.type == "A" %}
+<div class="panel">
+    <div class="panel-block">
+        <span class="icon has-text-success">
+            <i class="fa-solid fa-file-circle-plus"></i>
+        </span>
+        <span>
+            Archivo <b class="has-text-success">{{change.data.filename}}</b> agregado
+        </span>
+    </div>
+</div>
+
+{% elif change.type == "R" %}
+
+<div class="panel">
+    <div class="panel-block">
+        <span class="icon has-text-info">
+            <i class="fa-solid fa-pencil"></i>
+        </span>
+        <span>
+            Archivo renombrado: <b class="has-text-info">{{change.data.rename_from}}</b>
+            <span class="icon">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <b class="has-text-info">{{change.data.rename_to}}</b>
+        </span>
+    </div>
+</div>
+
+{% elif change.type == "M" %}
+<div class="panel">
+    <div class="panel-block">
+        <span class="icon has-text-warning">
+            <i class="fa-solid fa-file-pen"></i>
+        </span>
+        <span>
+            Archivo modificado: <b class="has-text-warning">{{change.data.filename}}</b>
+        </span>
+    </div>
+    <div class="panel-block">
+        <pre><code>codigo en esta parte</code></pre>
+    </div>
+</div>
+{% endif %}
+
+{% endfor %}
+
+{% endblock content %}

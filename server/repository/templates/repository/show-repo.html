@@ -103,7 +103,8 @@
                 <a href="{{ tag.commit }}" class="field is-grouped is-grouped-multiline">
                     <div class="control">
                         <div class="tags has-addons is-family-monospace">
-                            <span class="tag is-dark is-uppercase">{{ tag.commit|commit_short }}</span>
+                            <span class="tag is-info is-uppercase">{{ tag.commit|commit_short }}</span>
+                            <span class="tag is-dark">{{ tag.message }}</span>
                             <span class="tag is-info">{{ tag.name }}</span>
                         </div>
                     </div>

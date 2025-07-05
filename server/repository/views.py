@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
 from git.exc import NoSuchPathError
 from .models import RepoModel
-from django.contrib.auth.models import User
+from authentication.models import CustomUser
 import os
 
 from .RepoLib.RepoLib import RepoLib
@@ -79,7 +79,7 @@ class ShowListRepoView(generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs["username"])
+        user = get_object_or_404(CustomUser, username=self.kwargs["username"])
         return self.model.objects.filter(user=user)
 
 

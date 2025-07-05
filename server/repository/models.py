@@ -1,6 +1,6 @@
 from django.db import models
 from django_hashids import HashidsField
-from django.contrib.auth.models import User
+from authentication.models import CustomUser
 from django.conf import settings
 from django.dispatch import receiver
 import shutil
@@ -16,7 +16,7 @@ class RepoModel(models.Model):
     Modelo de la tabla que almacena información de los repositorios
     """
     hashid = HashidsField(real_field_name="id", min_length=6)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=600)
     created = models.DateTimeField(auto_now_add=True)

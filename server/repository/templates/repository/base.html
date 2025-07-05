@@ -68,7 +68,7 @@
             </div>
             
             <div class="navbar-item">
-                <form action="{% url 'logout_user' %}" method="post">
+                <form action="{% url 'auth_logout' %}" method="post">
                     {% csrf_token %}
                     <button class="button is-light">
                         <strong>Salir</strong>

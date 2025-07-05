@@ -6,11 +6,13 @@ from .forms import CustomUserLoginForm, CustomUserCreationForm
 from django.shortcuts import redirect
 from django.utils import timezone
 from .models import CustomUser
+from django.conf import settings
 
 
 class LoginView(FormView):
     template_name = "authentication/login.html"
     form_class = CustomUserLoginForm
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -38,6 +40,7 @@ class LoginView(FormView):
 class SignUpView(FormView):
     template_name = "authentication/signup.html"
     form_class = CustomUserCreationForm
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -62,6 +65,6 @@ class SignUpView(FormView):
 
 
 class LogoutView(View):
-    def get(self, request):
+    def post(self, request):
         logout(request)
         return redirect(reverse_lazy('auth_login'))

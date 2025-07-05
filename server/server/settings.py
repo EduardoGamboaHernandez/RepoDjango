@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'crispy_bulma',
 
     'repository',
-    'user',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'login_required.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -134,16 +133,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.CustomUserBackend',
+]
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
 CRISPY_TEMPLATE_PACK = "bulma"
 
 REPOS_DIR = os.getenv('REPOS_DIR')
 
-LOGIN_REDIRECT_URL = "inicio"
-LOGOUT_REDIRECT_URL = 'login_user'
-
-LOGIN_URL = 'login_user'
+LOGIN_REDIRECT_URL = "repo_to_home"
+LOGOUT_REDIRECT_URL = 'auth_login'
+LOGIN_URL = 'auth_login'
 
 LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
     "login_user",

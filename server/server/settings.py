@@ -148,15 +148,6 @@ LOGIN_REDIRECT_URL = "repo_to_home"
 LOGOUT_REDIRECT_URL = 'auth_login'
 LOGIN_URL = 'auth_login'
 
-LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
-    "login_user",
-    "pass_change_user",
-    "pass_change_done_user",
-    "pass_reset_user",
-    "logout_user",
-    "signup",
-]
-
 DJANGO_HASHIDS_SALT = 'git_salt'
 
 STATIC_CDN_URL = os.getenv('STATIC_CDN_URL')

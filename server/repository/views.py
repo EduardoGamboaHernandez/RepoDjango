@@ -7,6 +7,8 @@ from git.exc import NoSuchPathError
 from .models import RepoModel
 from authentication.models import CustomUser
 import os
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .RepoLib.RepoLib import RepoLib
 
@@ -15,11 +17,12 @@ from .RepoLib.RepoLib import RepoLib
 REPOS_DIR = getattr(settings, "REPOS_DIR", None)
 
 
+@login_required
 def home(request):
     return redirect('repo_list', username=request.user.username)
 
 
-class CreateRepoView(generic.FormView):
+class CreateRepoView(LoginRequiredMixin, generic.FormView):
     """
     vista del formulario para crear los repositorios
     """
@@ -35,7 +38,7 @@ class CreateRepoView(generic.FormView):
         return super().form_valid(model)
 
 
-class ShowRepoView(generic.View):
+class ShowRepoView(LoginRequiredMixin, generic.View):
     """
     vista del repositorios de un usuario
     """
@@ -70,7 +73,7 @@ class ShowRepoView(generic.View):
         return render(request, self.template_name, context)
 
 
-class ShowListRepoView(generic.ListView):
+class ShowListRepoView(LoginRequiredMixin, generic.ListView):
     """
     listado de los repositorios de un usuario
     """
@@ -83,7 +86,7 @@ class ShowListRepoView(generic.ListView):
         return self.model.objects.filter(user=user)
 
 
-class ListCommitsView(generic.View):
+class ListCommitsView(LoginRequiredMixin, generic.View):
     """
     listado de los commit de un usuario
     """
@@ -105,7 +108,7 @@ class ListCommitsView(generic.View):
         return render(request, self.template_name, context)
 
 
-class ShowFileView(generic.View):
+class ShowFileView(LoginRequiredMixin, generic.View):
     """
     vista del contenido de un archivo solicitado
     """
@@ -126,7 +129,7 @@ class ShowFileView(generic.View):
         return render(request, self.template_name, context)
 
 
-class DiffCommit(generic.View):
+class DiffCommit(LoginRequiredMixin, generic.View):
     """
     vista de las diferencias de un commit con su padre
     """

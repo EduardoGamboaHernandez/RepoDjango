@@ -1,0 +1,94 @@
+{% extends 'authentication/base.html' %}
+
+{% block title %}
+inicio de sesion
+{% endblock %}
+
+{% block styles %}
+.account-card {
+    max-width: 650px;
+    width: 100%;
+    padding: 2.5rem;
+    margin:auto;
+}
+{% endblock styles %}
+
+{% block form %}
+{% load crispy_forms_filters %}
+
+<div class="account-card">
+    <h1 class="title has-text-centered is-4">Crear Cuenta</h1>
+
+    <form method="POST">
+                {% if form.errors %}
+            <article class="message is-warning">
+
+                <div class="message-body">
+                    <ul>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </article>
+        {% endif %}
+
+{{ form.field }}
+
+
+        {% csrf_token %}
+        <div class="field">
+            <div class="control">
+                {{ form.username|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                {{ form.password1|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                {{ form.password2|as_crispy_field }}
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary is-fullwidth">
+                    Crear Cuenta
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <hr class="my-5"> <!-- Separador -->
+
+    <div class="help-text">
+        <p>¿Ya tienes una cuenta?
+            <a href="{% url 'auth_login' %}" class="is-fullwidth">
+                Inicia Sesión
+            </a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+

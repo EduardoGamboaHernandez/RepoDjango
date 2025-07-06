@@ -10,13 +10,13 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
 
     model = CustomUser
-    list_display = ('username', 'last_login', 'date_joined', 'is_staff', 'image')
+    list_display = ('username', 'last_login', 'date_joined', 'first_name', 'last_name')
     list_filter = ('username',)
     ordering = ('username', 'date_joined')
 
     fieldsets = (
         (None, {'fields': ('username',)}),
-        (('foto de perfil'), {'fields': ('image',)}),
+        (('perfil'), {'fields': ('image', 'first_name', 'last_name')}),
         (('Permisos'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
 

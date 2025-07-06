@@ -12,6 +12,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
@@ -20,3 +22,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'

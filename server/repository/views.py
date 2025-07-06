@@ -81,6 +81,11 @@ class ShowListRepoView(LoginRequiredMixin, generic.ListView):
     model = RepoModel
     paginate_by = 20
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = CustomUser.objects.get(username=self.kwargs["username"])
+        return context
+
     def get_queryset(self):
         user = get_object_or_404(CustomUser, username=self.kwargs["username"])
         return self.model.objects.filter(user=user)

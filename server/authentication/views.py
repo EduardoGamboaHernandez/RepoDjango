@@ -51,11 +51,15 @@ class SignUpView(FormView):
         username = form.cleaned_data['username']
         password1 = form.cleaned_data['password1']
         password2 = form.cleaned_data['password2']
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        print(form.cleaned_data)
+
         password = None
         if password1 == password2:
             password = password1
 
-        user = CustomUser.objects.create_user(username=username, password=password)
+        user = CustomUser.objects.create_user(username, password, first_name, last_name)
 
         if user is not None:
             login(self.request, user)

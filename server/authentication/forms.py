@@ -20,7 +20,17 @@ class CustomUserLoginForm(AuthenticationForm):
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
-        label="Nombre de Usuario",
+        label="Usuario",
+    )
+
+    first_name = forms.CharField(
+        label="Nombre",
+        required=True,
+    )
+
+    last_name = forms.CharField(
+        label="Apellido",
+        required=True,
     )
 
     password1 = forms.CharField(
@@ -43,4 +53,4 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username',)
+        fields = ('username', 'first_name', 'last_name')

@@ -55,6 +55,18 @@ inicio de sesion
 
         <div class="field">
             <div class="control">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
                 {{ form.password1|as_crispy_field }}
             </div>
         </div>
